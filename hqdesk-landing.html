@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HQDesk — The Freelancer Toolkit That Actually Gets You</title>
+<meta name="description" content="5 freelancer tools in one file. Invoices, proposals, follow-up emails, client tracking, rate calculator. 6 mood themes. $15 once, yours forever.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=DM+Mono:wght@400;500&family=Fredoka:wght@400;500;600&family=VT323&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:#f7f7f5;color:#1a1a18;overflow-x:hidden;}
+
+/* ── NAVBAR ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,247,245,0.85);backdrop-filter:blur(12px);border-bottom:0.5px solid rgba(229,228,223,0.6);}
+.nav-logo{display:flex;align-items:center;gap:8px;}
+.nav-mark{width:28px;height:28px;border-radius:8px;background:#00C48C;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:#000;}
+.nav-name{font-size:14px;font-weight:500;color:#1a1a18;}
+.nav-cta{padding:8px 18px;background:#1a1a18;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all 0.2s;}
+.nav-cta:hover{background:#000;transform:translateY(-1px);}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 20px 60px;text-align:center;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 60% 0%,rgba(0,196,140,0.08),transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(0,196,140,0.05),transparent 50%);pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:#fff;border:0.5px solid #e5e4df;border-radius:20px;padding:6px 16px;font-size:12px;color:#6b6a65;margin-bottom:28px;font-family:'DM Mono',monospace;position:relative;z-index:1;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:#00C48C;animation:badgepulse 2s ease-in-out infinite;}
+@keyframes badgepulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+.hero h1{font-size:clamp(40px,8vw,80px);font-weight:500;line-height:1.05;letter-spacing:-0.035em;color:#1a1a18;margin-bottom:24px;max-width:760px;position:relative;z-index:1;}
+.hero h1 em{font-style:italic;color:#00C48C;}
+.hero h1 .small{font-size:0.6em;font-weight:300;color:#9e9d97;display:block;margin-top:4px;letter-spacing:-0.01em;}
+.hero-sub{font-size:18px;color:#6b6a65;max-width:500px;line-height:1.65;margin-bottom:16px;position:relative;z-index:1;}
+.hero-funny{font-size:14px;color:#9e9d97;max-width:420px;line-height:1.5;margin-bottom:40px;position:relative;z-index:1;font-style:italic;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1;}
+.btn-hero{padding:16px 36px;background:#00C48C;color:#000;border:none;border-radius:12px;font-size:16px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all 0.25s;display:inline-block;}
+.btn-hero:hover{background:#00E0A0;transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,196,140,0.3);}
+.hero-note{font-size:13px;color:#9e9d97;margin-top:14px;position:relative;z-index:1;}
+.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:#9e9d97;letter-spacing:0.05em;text-transform:uppercase;font-family:'DM Mono',monospace;}
+.hero-scroll-line{width:1px;height:28px;background:linear-gradient(180deg,#d0cfc9,transparent);}
+
+/* ── STRIP ── */
+.strip{background:#fff;border-top:0.5px solid #e5e4df;border-bottom:0.5px solid #e5e4df;padding:16px 0;overflow:hidden;}
+.strip-inner{display:flex;animation:stripscroll 24s linear infinite;width:max-content;}
+.strip-pill{display:flex;align-items:center;gap:8px;padding:8px 28px;font-size:13px;color:#6b6a65;white-space:nowrap;border-right:0.5px solid #f0efeb;}
+.strip-pill strong{color:#1a1a18;font-weight:500;}
+.strip-dot{width:5px;height:5px;border-radius:50%;background:#00C48C;flex-shrink:0;}
+@keyframes stripscroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── SECTION WRAPPER ── */
+.section{padding:96px 20px;max-width:840px;margin:0 auto;}
+.sec-label{font-family:'DM Mono',monospace;font-size:11px;color:#00C48C;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;}
+.sec-h2{font-size:clamp(28px,5vw,48px);font-weight:500;letter-spacing:-0.025em;line-height:1.1;color:#1a1a18;margin-bottom:14px;}
+.sec-p{font-size:16px;color:#6b6a65;line-height:1.7;max-width:560px;}
+
+/* ── MOOD SECTION ── */
+.moods-wrap{background:#fff;border-top:0.5px solid #e5e4df;border-bottom:0.5px solid #e5e4df;padding:96px 20px;}
+.moods-inner{max-width:840px;margin:0 auto;}
+.mood-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:32px 0 24px;}
+.mood-tab{padding:8px 18px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:0.5px solid #e5e4df;background:#f7f7f5;color:#6b6a65;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.mood-tab.on{border-color:var(--c);color:var(--c);background:var(--bg);}
+.mood-tab:hover:not(.on){background:#f0efeb;}
+.mood-frame{border-radius:20px;overflow:hidden;border:0.5px solid #e5e4df;transition:all 0.3s;box-shadow:0 4px 24px rgba(0,0,0,0.06);}
+.mood-inner{padding:28px;}
+
+/* mood backgrounds */
+.m-clean{background:#f7f7f5;}
+.m-cat{background:#fff0f6;}
+.m-cozy{background:#fdf8f3;}
+.m-hack{background:#0a0f0a;}
+.m-rage{background:#fffafa;}
+.m-vapor{background:#0d0221;}
+
+.m-hdr{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:0.5px solid rgba(128,128,128,0.12);}
+.m-mark{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;flex-shrink:0;}
+.m-name{font-size:15px;font-weight:500;}
+.m-badge{font-family:'DM Mono',monospace;font-size:10px;margin-left:auto;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.m-card{border-radius:14px;padding:16px;border:0.5px solid;}
+.m-lbl{font-size:10px;text-transform:uppercase;letter-spacing:0.07em;font-weight:500;margin-bottom:12px;}
+.m-field{border-radius:9px;padding:9px 12px;font-size:13px;margin-bottom:7px;border:0.5px solid;}
+.m-field:last-of-type{margin-bottom:0;}
+.m-cmt{border-radius:9px;padding:8px 12px;font-size:12px;line-height:1.5;margin-top:10px;border:0.5px solid;}
+.m-btn{width:100%;padding:11px;border-radius:9px;font-size:13px;font-weight:500;text-align:center;margin-top:12px;border:none;cursor:default;font-family:'DM Sans',sans-serif;}
+.m-desc{margin-top:20px;padding-top:16px;font-size:13px;line-height:1.6;border-top:0.5px solid rgba(128,128,128,0.1);}
+
+/* ── TOOLS ── */
+.tools-list{display:flex;flex-direction:column;gap:10px;margin-top:40px;}
+.tool-item{background:#fff;border:0.5px solid #e5e4df;border-radius:16px;padding:22px 26px;display:flex;gap:18px;align-items:flex-start;transition:all 0.2s;cursor:default;}
+.tool-item:hover{border-color:#00C48C;transform:translateX(4px);box-shadow:0 4px 16px rgba(0,196,140,0.08);}
+.tool-n{font-family:'DM Mono',monospace;font-size:11px;color:#9e9d97;width:24px;flex-shrink:0;padding-top:3px;}
+.tool-body{flex:1;}
+.tool-title{font-size:15px;font-weight:500;color:#1a1a18;margin-bottom:5px;}
+.tool-desc{font-size:13px;color:#6b6a65;line-height:1.55;}
+.tool-tag{display:inline-block;font-size:10px;font-family:'DM Mono',monospace;color:#00C48C;background:rgba(0,196,140,0.08);border:0.5px solid rgba(0,196,140,0.25);padding:3px 10px;border-radius:20px;margin-top:9px;}
+
+/* ── TESTIMONIAL STYLE QUOTES ── */
+.quotes{background:#1a1a18;padding:80px 20px;}
+.quotes-inner{max-width:840px;margin:0 auto;}
+.quotes-label{font-family:'DM Mono',monospace;font-size:11px;color:#00C48C;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:40px;}
+.quotes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+.quote-card{background:#222220;border:0.5px solid #2e2e2c;border-radius:16px;padding:22px;}
+.quote-text{font-size:14px;color:#c8c7c0;line-height:1.65;margin-bottom:16px;font-style:italic;}
+.quote-mood{font-family:'DM Mono',monospace;font-size:11px;color:#6b6a65;}
+
+/* ── STATS ── */
+.stats{padding:80px 20px;background:#fff;border-top:0.5px solid #e5e4df;border-bottom:0.5px solid #e5e4df;}
+.stats-inner{max-width:840px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.stat{padding:32px 24px;text-align:center;}
+.stat-num{font-family:'DM Mono',monospace;font-size:48px;font-weight:500;color:#00C48C;line-height:1;margin-bottom:10px;}
+.stat-label{font-size:13px;color:#6b6a65;line-height:1.5;}
+
+/* ── PRICING ── */
+.pricing{padding:96px 20px;max-width:580px;margin:0 auto;text-align:center;}
+.price-box{background:#fff;border:0.5px solid #e5e4df;border-radius:24px;padding:44px 40px;margin-top:40px;position:relative;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.06);}
+.price-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#00C48C,#007A58,#00C48C);background-size:200% 100%;animation:shimmer 3s linear infinite;}
+@keyframes shimmer{0%{background-position:0% 0}100%{background-position:200% 0}}
+.price-tag{font-family:'DM Mono',monospace;font-size:11px;color:#9e9d97;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:20px;}
+.price-num{font-family:'DM Mono',monospace;font-size:72px;font-weight:500;color:#1a1a18;letter-spacing:-0.04em;line-height:1;margin-bottom:6px;}
+.price-once{font-size:14px;color:#9e9d97;margin-bottom:36px;}
+.price-list{list-style:none;text-align:left;margin-bottom:36px;}
+.price-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:#6b6a65;padding:10px 0;border-bottom:0.5px solid #f0efeb;line-height:1.4;}
+.price-list li:last-child{border:none;}
+.price-check{color:#00C48C;font-weight:500;flex-shrink:0;margin-top:1px;}
+.price-cta{display:block;width:100%;padding:18px;background:#00C48C;color:#000;border:none;border-radius:14px;font-size:17px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all 0.25s;}
+.price-cta:hover{background:#00E0A0;transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,196,140,0.3);}
+.price-small{font-size:12px;color:#9e9d97;margin-top:14px;line-height:1.6;}
+
+/* ── FAQ ── */
+.faq{padding:80px 20px;max-width:640px;margin:0 auto;}
+.faq-item{border-bottom:0.5px solid #e5e4df;padding:22px 0;cursor:pointer;}
+.faq-item:first-of-type{border-top:0.5px solid #e5e4df;}
+.faq-q{font-size:15px;font-weight:500;color:#1a1a18;margin-bottom:0;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.faq-icon{font-size:18px;color:#9e9d97;transition:transform 0.2s;flex-shrink:0;}
+.faq-a{font-size:14px;color:#6b6a65;line-height:1.65;max-height:0;overflow:hidden;transition:all 0.3s ease;margin-top:0;}
+.faq-item.open .faq-a{max-height:200px;margin-top:10px;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+
+/* ── FOOTER ── */
+footer{padding:48px 20px;border-top:0.5px solid #e5e4df;text-align:center;}
+.foot-logo{display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;}
+.foot-mark{width:26px;height:26px;border-radius:8px;background:#00C48C;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:#000;}
+.foot-name{font-size:15px;font-weight:500;color:#1a1a18;}
+footer p{font-size:13px;color:#9e9d97;margin-top:4px;}
+
+/* ── FLOATING CTA ── */
+.float{position:fixed;bottom:24px;right:24px;z-index:999;background:#1a1a18;color:#fff;border:none;border-radius:24px;padding:13px 22px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:flex;align-items:center;gap:8px;box-shadow:0 4px 24px rgba(0,0,0,0.2);transition:all 0.2s;}
+.float:hover{background:#000;transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.25);}
+.float-dot{width:6px;height:6px;border-radius:50%;background:#00C48C;}
+
+@media(max-width:640px){
+  .stats-inner{grid-template-columns:1fr;}
+  .price-box{padding:32px 24px;}
+  .price-num{font-size:56px;}
+  nav{padding:12px 16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-mark">HQ</div>
+    <span class="nav-name">HQDesk</span>
+  </div>
+  <a class="nav-cta" href="https://qsyy.gumroad.com/l/artyj" target="_blank">Get it — $15</a>
+</nav>
+
+<!-- FLOAT -->
+<a class="float" href="https://qsyy.gumroad.com/l/artyj" target="_blank">
+  <span class="float-dot"></span>Get HQDesk — $15
+</a>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-badge"><span class="hero-badge-dot"></span>5 tools · 6 moods · $15 once · yours forever</div>
+  <h1>The freelancer toolkit that <em>actually gets you</em><span class="small">invoices · proposals · follow-ups · tracking · rate calc</span></h1>
+  <p class="hero-sub">Everything you need to run your freelance business, in one file that works offline and never asks for a subscription.</p>
+  <p class="hero-funny">Also it has a cat mode where a sarcastic cat judges everything you type. Because why not.</p>
+  <div class="hero-btns">
+    <a class="btn-hero" href="https://qsyy.gumroad.com/l/artyj" target="_blank">Get HQDesk for $15 →</a>
+  </div>
+  <p class="hero-note">One-time payment · Download instantly · Works offline forever · No subscription ever</p>
+  <div class="hero-scroll">scroll<div class="hero-scroll-line"></div></div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-inner">
+    <div class="strip-pill"><span class="strip-dot"></span><strong>Invoice Generator</strong> — professional invoices in seconds</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>Proposal Writer</strong> — win clients with clear proposals</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>Follow-up Emails</strong> — chase payments without the awkward</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>Client Tracker</strong> — see who owes you at a glance</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>Rate Calculator</strong> — stop undercharging yourself</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>6 Mood Themes</strong> — make admin actually enjoyable</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>Works Offline</strong> — no internet needed after opening</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>No Subscription</strong> — ever. seriously. never.</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>Invoice Generator</strong> — professional invoices in seconds</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>Proposal Writer</strong> — win clients with clear proposals</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>Follow-up Emails</strong> — chase payments without the awkward</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>Client Tracker</strong> — see who owes you at a glance</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>Rate Calculator</strong> — stop undercharging yourself</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>6 Mood Themes</strong> — make admin actually enjoyable</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>Works Offline</strong> — no internet needed after opening</div>
+    <div class="strip-pill"><span class="strip-dot"></span><strong>No Subscription</strong> — ever. seriously. never.</div>
+  </div>
+</div>
+
+<!-- MOODS -->
+<section class="moods-wrap">
+  <div class="moods-inner">
+    <div class="sec-label">6 Vibes</div>
+    <h2 class="sec-h2">Pick how you want to feel today</h2>
+    <p class="sec-p">Every mood completely transforms the experience — colors, language, button labels, and the personality of every comment. Same power, completely different energy. Switch anytime.</p>
+    <div class="mood-tabs">
+      <button class="mood-tab on" style="--c:#00C48C;--bg:rgba(0,196,140,0.08)" onclick="setMood(this,'clean')">⚡ Clean</button>
+      <button class="mood-tab" style="--c:#FF6B9D;--bg:rgba(255,107,157,0.09)" onclick="setMood(this,'cat')">🐱 Cat</button>
+      <button class="mood-tab" style="--c:#C17A3A;--bg:rgba(193,122,58,0.08)" onclick="setMood(this,'cozy')">☕ Cozy</button>
+      <button class="mood-tab" style="--c:#00ff41;--bg:rgba(0,255,65,0.07)" onclick="setMood(this,'hack')">💻 Hacker</button>
+      <button class="mood-tab" style="--c:#e53935;--bg:rgba(229,57,53,0.07)" onclick="setMood(this,'rage')">😤 Rage</button>
+      <button class="mood-tab" style="--c:#ff71ce;--bg:rgba(255,113,206,0.08)" onclick="setMood(this,'vapor')">🌸 Vapor</button>
+    </div>
+    <div class="mood-frame" id="moodFrame"></div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="section">
+  <div class="sec-label">What's inside</div>
+  <h2 class="sec-h2">5 tools. Every one solves a real problem.</h2>
+  <p class="sec-p">No fluff. No tools you'll never use. Every single one was built around a real pain that freelancers deal with every week.</p>
+  <div class="tools-list">
+    <div class="tool-item">
+      <span class="tool-n">01</span>
+      <div class="tool-body">
+        <div class="tool-title">Invoice Generator</div>
+        <div class="tool-desc">Fill in your details and line items, hit generate. Out comes a professional invoice ready to print or save as PDF. Looks like you paid a designer to make it. You didn't.</div>
+        <span class="tool-tag">Guaranteed deliverable</span>
+      </div>
+    </div>
+    <div class="tool-item">
+      <span class="tool-n">02</span>
+      <div class="tool-body">
+        <div class="tool-title">Proposal Writer</div>
+        <div class="tool-desc">Fill in the project, deliverables, price, and timeline. Get a clean client-ready proposal in 60 seconds that makes you look like you've been doing this for years. Because now you have.</div>
+        <span class="tool-tag">Win more clients</span>
+      </div>
+    </div>
+    <div class="tool-item">
+      <span class="tool-n">03</span>
+      <div class="tool-body">
+        <div class="tool-title">Follow-up Email Writer</div>
+        <div class="tool-desc">Three tones: friendly first reminder, firm second follow-up, and nuclear final notice. Enter the amount and days overdue, copy the email, send it. Stop avoiding your inbox.</div>
+        <span class="tool-tag">Get paid faster</span>
+      </div>
+    </div>
+    <div class="tool-item">
+      <span class="tool-n">04</span>
+      <div class="tool-body">
+        <div class="tool-title">Client Tracker</div>
+        <div class="tool-desc">Add every client, project, amount, and payment status. See at a glance exactly how much you've collected, what's pending, and who has been "just about to send it" for two weeks.</div>
+        <span class="tool-tag">Stay organized</span>
+      </div>
+    </div>
+    <div class="tool-item">
+      <span class="tool-n">05</span>
+      <div class="tool-body">
+        <div class="tool-title">Rate Calculator</div>
+        <div class="tool-desc">Enter your income goal, work days, and hours per day. Get your minimum hourly rate, recommended project price, and daily target. Know your number. Stop guessing. Stop undercharging.</div>
+        <span class="tool-tag">Stop undercharging</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTES -->
+<section class="quotes">
+  <div class="quotes-inner">
+    <div class="quotes-label">What different moods feel like</div>
+    <div class="quotes-grid">
+      <div class="quote-card">
+        <div class="quote-text">"oh great another CLIENT. hope they know what they want. they never know what they want."</div>
+        <div class="quote-mood">😤 Rage mode · client name field</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">"🍵 every client is a new relationship worth tending carefully."</div>
+        <div class="quote-mood">☕ Cozy mode · client name field</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">"// TARGET_CLIENT logged. payment_probability: unknown."</div>
+        <div class="quote-mood">💻 Hacker mode · client name field</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">"THAT IS YOUR MONEY. SITTING IN THEIR ACCOUNT. THE AUDACITY."</div>
+        <div class="quote-mood">😤 Rage mode · overdue amount field</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">"✦ that value exists in limbo — created, delivered, not yet returned."</div>
+        <div class="quote-mood">🌸 Vapor mode · overdue amount field</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">"😾 i've seen higher prices on gas station sushi."</div>
+        <div class="quote-mood">🐱 Cat mode · price field</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-num">5</div>
+      <div class="stat-label">tools in one file — no app switching, no browser tabs, no mess</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">6</div>
+      <div class="stat-label">mood themes that transform the whole experience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">$0</div>
+      <div class="stat-label">per month, forever — pay once and it's yours. no tricks.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="sec-label">Pricing</div>
+  <h2 class="sec-h2">One price. Forever.</h2>
+  <p class="sec-p" style="margin:0 auto;text-align:center;">No subscription. No login required. No data collected. Pay once, download the file, open it in any browser, use it forever — even without internet.</p>
+  <div class="price-box">
+    <div class="price-tag">HQDesk — Complete Toolkit</div>
+    <div class="price-num">$15</div>
+    <div class="price-once">one-time payment · yours forever</div>
+    <ul class="price-list">
+      <li><span class="price-check">✓</span>Invoice Generator — print-ready professional output</li>
+      <li><span class="price-check">✓</span>Proposal Writer — client-ready in 60 seconds</li>
+      <li><span class="price-check">✓</span>Follow-up Email Writer — 3 tones, ready to copy-send</li>
+      <li><span class="price-check">✓</span>Client Tracker — see exactly who owes you what</li>
+      <li><span class="price-check">✓</span>Rate Calculator — know your number</li>
+      <li><span class="price-check">✓</span>6 mood themes — Cat, Cozy, Hacker, Rage, Vapor, Clean</li>
+      <li><span class="price-check">✓</span>Smart field comments — a different personality per mood</li>
+      <li><span class="price-check">✓</span>Works completely offline after first open</li>
+      <li><span class="price-check">✓</span>No login. No account. No subscription. Ever.</li>
+      <li><span class="price-check">✓</span>Mac, Windows, Linux — anything with a browser works</li>
+    </ul>
+    <a class="price-cta" href="https://qsyy.gumroad.com/l/artyj" target="_blank">Get HQDesk for $15 →</a>
+    <p class="price-small">You'll receive one HTML file. Double-click to open. That's your toolkit.<br>7-day money back guarantee — no questions asked.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="sec-label">Questions</div>
+  <h2 class="sec-h2" style="margin-bottom:32px;">Things people ask</h2>
+
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">What exactly do I get? <span class="faq-icon">+</span></div>
+    <div class="faq-a">A single HTML file. You download it, double-click it, and it opens in your browser. That's your full toolkit — 5 tools, 6 moods, all working. No installation, no account, no internet needed after that.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Does it work on Mac, Windows, Linux? <span class="faq-icon">+</span></div>
+    <div class="faq-a">Yes, all of them. It runs in any browser — Chrome, Safari, Firefox, Edge. If you have a browser, it works. Even on your phone.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Why is it just a file and not an app? <span class="faq-icon">+</span></div>
+    <div class="faq-a">Because apps need servers, logins, and subscriptions. A file needs nothing. You download it once and it works forever — even without internet. That's the whole point. No dependency on anyone else's infrastructure.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Will I get updates? <span class="faq-icon">+</span></div>
+    <div class="faq-a">Yes. Any updates to HQDesk are free for everyone who bought it. You'll get a notification through Gumroad when a new version is available.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">What's the refund policy? <span class="faq-icon">+</span></div>
+    <div class="faq-a">7-day full refund, no questions asked. If it doesn't work for you or you're not happy, message through Gumroad and you get your money back.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">Why does it have a cat mode? <span class="faq-icon">+</span></div>
+    <div class="faq-a">Because freelance admin is boring and stressful and nobody said it had to be. The cat judges your prices, worries about your clients, and panics about your deadlines. It's genuinely funny. It's also genuinely useful because the comments are real freelance advice disguised as cat opinions.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">
+    <div class="foot-mark">HQ</div>
+    <span class="foot-name">HQDesk</span>
+  </div>
+  <p>Built for freelancers who just want to get paid.</p>
+</footer>
+
+<script>
+const MOODS={
+  clean:{
+    wrap:'m-clean',
+    mark:{bg:'#00C48C',color:'#000',r:'9px'},
+    name:{t:'HQDesk',color:'#1a1a18'},
+    badge:{t:'v1.0',bg:'rgba(0,196,140,0.08)',color:'#00C48C',border:'rgba(0,196,140,0.25)'},
+    card:{bg:'#fff',border:'#e5e4df',r:'12px',extra:''},
+    lbl:{color:'#9e9d97'},
+    fields:[{t:'Client name',bg:'#f7f7f5',border:'#d0cfc9',color:'#1a1a18'},{t:'Invoice #',bg:'#f7f7f5',border:'#d0cfc9',color:'#1a1a18'},{t:'Due date',bg:'#f7f7f5',border:'#d0cfc9',color:'#1a1a18'}],
+    cmt:null,
+    btn:{t:'Generate Invoice →',bg:'#00C48C',color:'#000',r:'8px'},
+    desc:{color:'#6b6a65',border:'rgba(0,0,0,0.06)',t:'Clean and professional. No comments, no distractions. Just the tools doing their job quietly. For when you need to focus and get things done.'}
+  },
+  cat:{
+    wrap:'m-cat',
+    mark:{bg:'#FF6B9D',color:'#000',r:'9px'},
+    name:{t:'HQDesk~',color:'#1a1a18',font:"'Fredoka',sans-serif",size:'17px'},
+    badge:{t:'😸 meow mode',bg:'rgba(255,107,157,0.09)',color:'#FF6B9D',border:'rgba(255,107,157,0.3)'},
+    card:{bg:'#fff',border:'#f5c6d8',r:'16px',extra:''},
+    lbl:{color:'#b8446e'},
+    fields:[{t:'Client name 🐾',bg:'#fff0f6',border:'#f5c6d8',color:'#2c1f0f'},{t:'Invoice #',bg:'#fff0f6',border:'#f5c6d8',color:'#2c1f0f'},{t:'Due date',bg:'#fff0f6',border:'#f5c6d8',color:'#2c1f0f'}],
+    cmt:{t:"😾 hope they're not a \"can you just quickly\" type.",bg:'rgba(255,107,157,0.08)',border:'rgba(255,107,157,0.25)',color:'#b8446e'},
+    btn:{t:'Generate it hooman 🐾',bg:'#FF6B9D',color:'#000',r:'20px',font:"'Fredoka',sans-serif"},
+    desc:{color:'#b8446e',border:'rgba(255,107,157,0.15)',t:"A sarcastic cat judges everything you type. Low prices get roasted. Late clients get side-eyed. Tight deadlines cause mild panic. Every field has a different comment and they're all different every time. Genuinely funny. Surprisingly useful."}
+  },
+  cozy:{
+    wrap:'m-cozy',
+    mark:{bg:'#C17A3A',color:'#fff',r:'9px'},
+    name:{t:'HQDesk',color:'#2c1f0f',font:"'Playfair Display',serif",style:'italic'},
+    badge:{t:'☕ brewing',bg:'rgba(193,122,58,0.08)',color:'#C17A3A',border:'rgba(193,122,58,0.28)'},
+    card:{bg:'#fff',border:'#ddd0bc',r:'16px',extra:''},
+    lbl:{color:'#9a7a55'},
+    fields:[{t:'Client name',bg:'#f5ede1',border:'#c9b99e',color:'#2c1f0f'},{t:'Invoice #',bg:'#f5ede1',border:'#c9b99e',color:'#2c1f0f'},{t:'Due date',bg:'#f5ede1',border:'#c9b99e',color:'#2c1f0f'}],
+    cmt:{t:'🍵 every client is a new relationship worth tending carefully.',bg:'rgba(193,122,58,0.08)',border:'rgba(193,122,58,0.28)',color:'#8a5425'},
+    btn:{t:'Brew the invoice ☕',bg:'#C17A3A',color:'#fff',r:'20px'},
+    desc:{color:'#8a5425',border:'rgba(193,122,58,0.15)',t:'Warm browns, soft wisdom, gentle encouragement. Like doing your admin from a nice coffee shop with a friend across the table. The comments are supportive and occasionally poetic. A surprisingly calming way to do your least favourite work.'}
+  },
+  hack:{
+    wrap:'m-hack',
+    mark:{bg:'#00ff41',color:'#000',r:'0'},
+    name:{t:'> HQDESK_',color:'#00ff41',font:"'VT323',monospace",size:'19px',spacing:'0.1em'},
+    badge:{t:'[ACTIVE]',bg:'rgba(0,255,65,0.07)',color:'#00ff41',border:'rgba(0,255,65,0.25)',font:"'VT323',monospace"},
+    card:{bg:'#0f150f',border:'#1a2e1a',r:'0',extra:''},
+    lbl:{color:'#006618',font:"'VT323',monospace",size:'13px',spacing:'0.1em'},
+    fields:[{t:'client.name',bg:'#0a0f0a',border:'#1a2e1a',color:'#00ff41',font:"'VT323',monospace",size:'14px'},{t:'invoice.ref',bg:'#0a0f0a',border:'#1a2e1a',color:'#00ff41',font:"'VT323',monospace",size:'14px'},{t:'deadline.timestamp',bg:'#0a0f0a',border:'#1a2e1a',color:'#00ff41',font:"'VT323',monospace",size:'14px'}],
+    cmt:{t:'// TARGET_CLIENT logged. payment_probability: unknown.',bg:'rgba(0,255,65,0.07)',border:'rgba(0,255,65,0.25)',color:'#00c030',font:"'VT323',monospace",size:'13px'},
+    btn:{t:'> COMPILE INVOICE_',bg:'#00ff41',color:'#000',r:'0',font:"'VT323',monospace",size:'15px',spacing:'0.08em'},
+    desc:{color:'#00c030',border:'rgba(0,255,65,0.15)',t:'Matrix rain falls in the background. Everything is terminal font. Comments are logged like system data — low prices get CRITICAL_ERROR, suspicious names get FLAGGED, tight deadlines get TIMELINE_RISK_HIGH. Dry, precise, and oddly satisfying.'}
+  },
+  rage:{
+    wrap:'m-rage',
+    mark:{bg:'#e53935',color:'#fff',r:'6px'},
+    name:{t:'HQDesk',color:'#1a0505'},
+    badge:{t:'😤 WORKING ON IT',bg:'rgba(229,57,53,0.07)',color:'#e53935',border:'rgba(229,57,53,0.25)'},
+    card:{bg:'#fff5f5',border:'rgba(229,57,53,0.2)',r:'4px',extra:'border-left:3px solid #e53935;'},
+    lbl:{color:'#b05050'},
+    fields:[{t:'Client name',bg:'#ffe8e8',border:'#e8a0a0',color:'#1a0505'},{t:'Invoice #',bg:'#ffe8e8',border:'#e8a0a0',color:'#1a0505'},{t:'Due date',bg:'#ffe8e8',border:'#e8a0a0',color:'#1a0505'}],
+    cmt:{t:"oh great another CLIENT. hope they know what they want. they never know what they want.",bg:'rgba(229,57,53,0.07)',border:'rgba(229,57,53,0.25)',color:'#b71c1c'},
+    btn:{t:'FINE, generate the invoice →',bg:'#e53935',color:'#fff',r:'6px'},
+    desc:{color:'#b71c1c',border:'rgba(229,57,53,0.15)',t:'For when a client has just asked for the fifth revision. Comments are relatable freelance rage — low prices get absolutely destroyed, overdue amounts get full caps energy, tight deadlines get dramatic breakdowns. Painfully accurate and extremely funny.'}
+  },
+  vapor:{
+    wrap:'m-vapor',
+    mark:{bg:'linear-gradient(135deg,#ff71ce,#01cdfe)',color:'#000',r:'9px'},
+    name:{t:'HQDesk',gradient:true},
+    badge:{t:'✦ aesthetic ✦',bg:'rgba(255,113,206,0.08)',color:'#ff71ce',border:'rgba(255,113,206,0.3)'},
+    card:{bg:'#140330',border:'#2d0a5e',r:'12px',extra:''},
+    lbl:{color:'#8b5a9e'},
+    fields:[{t:'client.entity',bg:'#0d0221',border:'#2d0a5e',color:'#fffbfe'},{t:'invoice.ref',bg:'#0d0221',border:'#2d0a5e',color:'#fffbfe'},{t:'deadline.timestamp',bg:'#0d0221',border:'#2d0a5e',color:'#fffbfe'}],
+    cmt:{t:'✦ a new entity enters the ledger. intentions: unknown. potential: real.',bg:'rgba(255,113,206,0.08)',border:'rgba(255,113,206,0.3)',color:'#c89fd4'},
+    btn:{t:'✦ Generate Invoice ✦',bg:'linear-gradient(90deg,#ff71ce,#b537a8)',color:'#fff',r:'8px'},
+    desc:{color:'#c89fd4',border:'rgba(255,113,206,0.15)',t:'Pink and purple neon, synthwave grid at the bottom, vaporwave sun glowing behind everything. Comments blend poetic detachment with sharp financial truth. Beautiful to look at, surprisingly insightful to read.'}
+  }
+};
+
+function setMood(btn, m){
+  document.querySelectorAll('.mood-tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  render(m);
+}
+
+function render(m){
+  const d=MOODS[m];
+  const nameStyle=`
+    color:${d.name.gradient?'transparent':d.name.color};
+    ${d.name.gradient?'background:linear-gradient(90deg,#ff71ce,#01cdfe,#05ffa1);-webkit-background-clip:text;background-clip:text;':''}
+    ${d.name.font?'font-family:'+d.name.font+';':''}
+    ${d.name.size?'font-size:'+d.name.size+';':''}
+    ${d.name.style?'font-style:'+d.name.style+';':''}
+    ${d.name.spacing?'letter-spacing:'+d.name.spacing+';':''}
+  `;
+  const fieldsHTML=d.fields.map(f=>`
+    <div class="m-field" style="background:${f.bg};border-color:${f.border};color:${f.color};${f.font?'font-family:'+f.font+';':''}${f.size?'font-size:'+f.size+';':''}">${f.t}</div>
+  `).join('');
+  const cmtHTML=d.cmt?`<div class="m-cmt" style="background:${d.cmt.bg};border-color:${d.cmt.border};color:${d.cmt.color};${d.cmt.font?'font-family:'+d.cmt.font+';':''}${d.cmt.size?'font-size:'+d.cmt.size+';':''}">${d.cmt.t}</div>`:'';
+  const btnStyle=`background:${d.btn.bg};color:${d.btn.color};border-radius:${d.btn.r};${d.btn.font?'font-family:'+d.btn.font+';':''}${d.btn.size?'font-size:'+d.btn.size+';':''}${d.btn.spacing?'letter-spacing:'+d.btn.spacing+';':''}`;
+  const badgeStyle=`background:${d.badge.bg};color:${d.badge.color};border-color:${d.badge.border};${d.badge.font?'font-family:'+d.badge.font+';':''}`;
+  const lblStyle=`color:${d.lbl.color};${d.lbl.font?'font-family:'+d.lbl.font+';':''}${d.lbl.size?'font-size:'+d.lbl.size+';':''}${d.lbl.spacing?'letter-spacing:'+d.lbl.spacing+';':''}`;
+  const cardStyle=`background:${d.card.bg};border-color:${d.card.border};border-radius:${d.card.r};${d.card.extra}`;
+  const markStyle=`background:${d.mark.bg};color:${d.mark.color};border-radius:${d.mark.r};`;
+
+  document.getElementById('moodFrame').innerHTML=`
+    <div class="mood-inner ${d.wrap}">
+      <div class="m-hdr">
+        <div class="m-mark" style="${markStyle}">HQ</div>
+        <div class="m-name" style="${nameStyle}">${d.name.t}</div>
+        <div class="m-badge" style="${badgeStyle}">${d.badge.t}</div>
+      </div>
+      <div class="m-card" style="${cardStyle}">
+        <div class="m-lbl" style="${lblStyle}">Invoice — Bill to</div>
+        ${fieldsHTML}
+        ${cmtHTML}
+        <button class="m-btn" style="${btnStyle}">${d.btn.t}</button>
+      </div>
+      <div class="m-desc" style="color:${d.desc.color};border-color:${d.desc.border};">${d.desc.t}</div>
+    </div>
+  `;
+}
+
+function toggleFaq(el){
+  el.classList.toggle('open');
+}
+
+// init
+render('clean');
+</script>
+</body>
+</html>
